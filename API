@@ -1,0 +1,10 @@
+sync def status_order(self, request: Request) -> Response:
+       
+        device_id = request.rel_url.query.get("id")
+
+        if device_id:
+            result_data = await self._order_client.status_order(device_id)
+            if result_data is not None:
+                return json_response(status=result_data["status_code"], data=result_data["data"])
+            raise HTTPUnauthorized
+        raise HTTPBadRequest
